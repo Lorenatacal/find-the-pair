@@ -36,7 +36,7 @@ console.log(cards, 'card')
           type: key,
           backImg: 'url to backImg',
           frontImg: images[key],
-          flipped: false
+          flipped: true
         })
         result.push(createCard())
         result.push(createCard())
@@ -47,13 +47,13 @@ console.log(cards, 'card')
 
     return(
       <div>
-        {cards.map((item) =>
-          <ReactCardFlip isFlipped={flipCard} flipDirection="vertical">
+        {cards.map(({backImg, frontImg, flipped}) =>
+          <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
               <div key="front">
-                 <StyledButton onClick={toggleFlipCard}>My front</StyledButton>
+                 <StyledButton onClick={toggleFlipCard}>{backImg}</StyledButton>
               </div>
               <div key="back">
-                 <StyledButton onClick={toggleFlipCard}>My back</StyledButton>
+                 <StyledButton onClick={toggleFlipCard}>{frontImg}</StyledButton>
               </div>
               </ReactCardFlip> 
           )}
