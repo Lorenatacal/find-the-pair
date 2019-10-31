@@ -2,6 +2,13 @@ import React from 'react';
 import ReactCardFlip from 'react-card-flip';
 import styled from 'styled-components'
 
+const StyledButton = styled.button`
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  font-size: 3em
+`
+
 
 const Card = () => {
 
@@ -12,10 +19,10 @@ const Card = () => {
       <>{
        <ReactCardFlip isFlipped={flipCard} flipDirection="vertical">
          <div key="front">
-          <button onClick={toggleFlipCard}>My front</button>
+          <StyledButton onClick={toggleFlipCard}>My front</StyledButton>
          </div>
          <div key="back">
-          <button onClick={toggleFlipCard}>My back</button>
+          <StyledButton onClick={toggleFlipCard}>My back</StyledButton>
          </div>
        </ReactCardFlip> 
       }
