@@ -15,13 +15,14 @@ const StyledFrontImage = styled.img`
   width: 100%;
   height: 200px
 `
+const StyledScore = styled.h2`
+  text-align: center;
+`
 
 const Cards = () => {
-    // const [flipCard, setFlipCard] = React.useState(false)
-    // const toggleFlipCard = () => setFlipCard(prevState => !prevState)
     const [cards, setCards] = React.useState(shuffle(myCards()))
     const [cardHistory, setCardHistory] = React.useState([])
-    const [score, setScore] = React.useState(null)
+    const [score, setScore] = React.useState(0)
 
     console.log(cardHistory, 'cardHistory')
     console.log(score, 'score')
@@ -62,16 +63,9 @@ const Cards = () => {
       return a;
   }
 
-  function matchCards({ type, setCardHistory, cardHistory}) {
-      if(cardHistory.length === 2 || cardHistory[0].type === cardHistory[1].type){
-        setScore(...cardHistory, +1 )
-        return (
-          <p>You matched this itemYour score is:{setScore}</p>
-        )
-    }
-  }
-
     return(
+      <div>
+        <StyledScore>Your score is: {score}</StyledScore>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(6, 200px)',
@@ -89,9 +83,18 @@ const Cards = () => {
                       if(cardHistory.length < 2) {
                         const cardIndex = copyOfCards[index]
                         setCardHistory([...cardHistory, cardIndex])
-                      } else if(cardHistory.length === 2) {
+                        if(copyOfCards[0].type === copyOfCards[1].type) {          
+                        }
+                      } else if (cardHistory.length === 2 && cardHistory[0].type === cardHistory[1].type) {
+                        setScore(score+1)
                         setCardHistory([])
-                      }          
+                        console.log(score, "a")
+                        return(
+                          <p>{score}</p>
+                        )
+                      } else {
+                        setCardHistory([])
+                      }      
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
@@ -109,6 +112,7 @@ const Cards = () => {
                 </div>
               </ReactCardFlip> 
           )}
+      </div>
       </div>
     )
   }
