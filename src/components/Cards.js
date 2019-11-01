@@ -15,13 +15,19 @@ const StyledFrontImage = styled.img`
   width: 100%;
   height: 200px
 `
+const StyledScore = styled.h2`
+  text-align: center;
+`
 
 const Cards = () => {
-    const [flipCard, setFlipCard] = React.useState(false)
-    const toggleFlipCard = () => setFlipCard(prevState => !prevState)
-    const [cards, setCards] = React.useState(shuffle(Cards()))
+    const [cards, setCards] = React.useState(shuffle(myCards()))
+    const [cardHistory, setCardHistory] = React.useState([])
+    const [score, setScore] = React.useState(0)
 
-    function Cards(){
+    console.log(cardHistory, 'cardHistory')
+    console.log(score, 'score')
+
+    function myCards(){
       let id = 0
       const images = {
         pig: "https://i2.wp.com/www.lkrecic.com/wp-content/uploads/2013/12/flying-pig-01.png?w=900&ssl=1",
@@ -57,7 +63,30 @@ const Cards = () => {
       return a;
   }
 
+    function matchCards({backImg, frontImg, flipped, type}, index) {
+      const copyOfCards = [...cards]
+      copyOfCards[index].flipped = true
+      setCards(copyOfCards)
+      if(cardHistory.length < 2) {
+        const cardIndex = copyOfCards[index]
+        setCardHistory([...cardHistory, cardIndex])
+        if(copyOfCards[0].type === copyOfCards[1].type) {          
+        }
+      } else if (cardHistory.length === 2 && cardHistory[0].type === cardHistory[1].type) {
+        setScore(score+1)
+        setCardHistory([])
+        return(
+          <p>{score}</p>
+        )
+      } else {
+        setCardHistory([])
+      }
+      return score
+    }
+
     return(
+      <div>
+        <StyledScore>Your score is: {score}</StyledScore>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(6, 200px)',
@@ -65,13 +94,11 @@ const Cards = () => {
         justifyContent: 'center',
         margin: '2%'
       }}>
-        {cards.map(({backImg, frontImg, flipped}, index) =>
+        {cards.map(({backImg, frontImg, flipped, type}, index) =>
             <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
                 <div key="front">
                   <StyledButton onClick={() => {
-                      const copyOfCards = [...cards]
-                      copyOfCards[index].flipped = true
-                      setCards(copyOfCards)
+                        matchCards({backImg, frontImg, flipped, type}, index)
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
@@ -83,13 +110,13 @@ const Cards = () => {
                     copyOfCards[index].flipped = false
                     setCards(copyOfCards)
                 }}
-                    // changeFlipp({ cards, flipped, backImg, frontImg, setFlipCard })
                   >
                     <StyledFrontImage src={frontImg}></StyledFrontImage>
                   </StyledButton>
                 </div>
               </ReactCardFlip> 
           )}
+      </div>
       </div>
     )
   }
