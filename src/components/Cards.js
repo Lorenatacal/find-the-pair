@@ -62,6 +62,15 @@ const Cards = () => {
       return a;
   }
 
+  function matchCards({ type, setCardHistory, cardHistory}) {
+      if(cardHistory.length === 2 || cardHistory[0].type === cardHistory[1].type){
+        setScore(...cardHistory, +1 )
+        return (
+          <p>You matched this itemYour score is:{setScore}</p>
+        )
+    }
+  }
+
     return(
       <div style={{
         display: 'grid',
@@ -70,7 +79,7 @@ const Cards = () => {
         justifyContent: 'center',
         margin: '2%'
       }}>
-        {cards.map(({backImg, frontImg, flipped}, index) =>
+        {cards.map(({backImg, frontImg, flipped, type}, index) =>
             <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
                 <div key="front">
                   <StyledButton onClick={() => {
@@ -80,8 +89,9 @@ const Cards = () => {
                       if(cardHistory.length < 2) {
                         const cardIndex = copyOfCards[index]
                         setCardHistory([...cardHistory, cardIndex])
-                      } 
-                      
+                      } else if(cardHistory.length === 2) {
+                        setCardHistory([])
+                      }          
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
@@ -90,13 +100,9 @@ const Cards = () => {
                 <div key="back">
                   <StyledButton onClick={() => {
                     const copyOfCards = [...cards]
-                    // if(cardHistory[0].type === cardHistory[1].type) {
-                    //   setScore(...cardHistory, +1 )
-                    // }
                     copyOfCards[index].flipped = false
                     setCards(copyOfCards)
                 }}
-                    // changeFlipp({ cards, flipped, backImg, frontImg, setFlipCard })
                   >
                     <StyledFrontImage src={frontImg}></StyledFrontImage>
                   </StyledButton>
