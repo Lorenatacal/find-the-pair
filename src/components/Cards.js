@@ -16,11 +16,10 @@ const StyledFrontImage = styled.img`
   height: 200px
 `
 
-
 const Cards = () => {
     const [flipCard, setFlipCard] = React.useState(false)
     const toggleFlipCard = () => setFlipCard(prevState => !prevState)
-    const [cards, setCards] = React.useState(Cards())
+    const [cards, setCards] = React.useState(shuffle(Cards()))
 
     function Cards(){
       let id = 0
@@ -49,7 +48,14 @@ const Cards = () => {
       }, [])
       return cards
     }
-    console.log(cards, 'cards')
+
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+  }
 
     return(
       <div style={{
