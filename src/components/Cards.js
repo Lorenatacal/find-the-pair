@@ -63,6 +63,27 @@ const Cards = () => {
       return a;
   }
 
+    function matchCards({backImg, frontImg, flipped, type}, index) {
+      const copyOfCards = [...cards]
+      copyOfCards[index].flipped = true
+      setCards(copyOfCards)
+      if(cardHistory.length < 2) {
+        const cardIndex = copyOfCards[index]
+        setCardHistory([...cardHistory, cardIndex])
+        if(copyOfCards[0].type === copyOfCards[1].type) {          
+        }
+      } else if (cardHistory.length === 2 && cardHistory[0].type === cardHistory[1].type) {
+        setScore(score+1)
+        setCardHistory([])
+        return(
+          <p>{score}</p>
+        )
+      } else {
+        setCardHistory([])
+      }
+      return score
+    }
+
     return(
       <div>
         <StyledScore>Your score is: {score}</StyledScore>
@@ -77,24 +98,7 @@ const Cards = () => {
             <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
                 <div key="front">
                   <StyledButton onClick={() => {
-                      const copyOfCards = [...cards]
-                      copyOfCards[index].flipped = true
-                      setCards(copyOfCards)
-                      if(cardHistory.length < 2) {
-                        const cardIndex = copyOfCards[index]
-                        setCardHistory([...cardHistory, cardIndex])
-                        if(copyOfCards[0].type === copyOfCards[1].type) {          
-                        }
-                      } else if (cardHistory.length === 2 && cardHistory[0].type === cardHistory[1].type) {
-                        setScore(score+1)
-                        setCardHistory([])
-                        console.log(score, "a")
-                        return(
-                          <p>{score}</p>
-                        )
-                      } else {
-                        setCardHistory([])
-                      }      
+                        matchCards({backImg, frontImg, flipped, type}, index)
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
