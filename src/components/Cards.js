@@ -70,8 +70,6 @@ const Cards = () => {
       if(cardHistory.length < 2) {
         const cardIndex = copyOfCards[index]
         setCardHistory([...cardHistory, cardIndex])
-        if(copyOfCards[0].type === copyOfCards[1].type) {          
-        }
       } else if (cardHistory.length === 2 && cardHistory[0].type === cardHistory[1].type) {
         setScore(score+1)
         setCardHistory([])
@@ -82,6 +80,17 @@ const Cards = () => {
         setCardHistory([])
       }
       return score
+    }
+
+    function endGame({ score, setScore}) {
+      if(score === 8) {
+        return(
+          <>
+            <p>End Of Game</p>
+          </>
+        )
+      }
+
     }
 
     return(
@@ -99,6 +108,7 @@ const Cards = () => {
                 <div key="front">
                   <StyledButton onClick={() => {
                         matchCards({backImg, frontImg, flipped, type}, index)
+                        endGame({ score, setScore})
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
