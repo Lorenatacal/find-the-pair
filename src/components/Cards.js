@@ -17,11 +17,16 @@ const StyledFrontImage = styled.img`
 `
 
 const Cards = () => {
-    const [flipCard, setFlipCard] = React.useState(false)
-    const toggleFlipCard = () => setFlipCard(prevState => !prevState)
-    const [cards, setCards] = React.useState(shuffle(Cards()))
+    // const [flipCard, setFlipCard] = React.useState(false)
+    // const toggleFlipCard = () => setFlipCard(prevState => !prevState)
+    const [cards, setCards] = React.useState(shuffle(myCards()))
+    const [cardHistory, setCardHistory] = React.useState([])
+    const [score, setScore] = React.useState(null)
 
-    function Cards(){
+    console.log(cardHistory, 'cardHistory')
+    console.log(score, 'score')
+
+    function myCards(){
       let id = 0
       const images = {
         pig: "https://i2.wp.com/www.lkrecic.com/wp-content/uploads/2013/12/flying-pig-01.png?w=900&ssl=1",
@@ -72,6 +77,11 @@ const Cards = () => {
                       const copyOfCards = [...cards]
                       copyOfCards[index].flipped = true
                       setCards(copyOfCards)
+                      if(cardHistory.length < 2) {
+                        const cardIndex = copyOfCards[index]
+                        setCardHistory([...cardHistory, cardIndex])
+                      } 
+                      
                   }}
                   >
                     <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
@@ -80,6 +90,9 @@ const Cards = () => {
                 <div key="back">
                   <StyledButton onClick={() => {
                     const copyOfCards = [...cards]
+                    // if(cardHistory[0].type === cardHistory[1].type) {
+                    //   setScore(...cardHistory, +1 )
+                    // }
                     copyOfCards[index].flipped = false
                     setCards(copyOfCards)
                 }}
