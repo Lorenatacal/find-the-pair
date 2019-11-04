@@ -1,20 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import Board from './components/Board';
-import styled from 'styled-components'
+import UserName from './components/UserName'
 
 const StyledTitle = styled.h1`
-  margin: 4%;
+  margin: 2%;
   text-align: center;
   font-Family: Cantarell, italic
 `
-
 
 function App() {
 
   return (
     <div>
       <StyledTitle>Match the Pair</StyledTitle>
-        <Board />
+      <UserName />
+      <Board />
     </div>
   );
 }
