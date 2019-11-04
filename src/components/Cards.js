@@ -88,29 +88,24 @@ const Cards = () => {
     }
 
     function endGame({ score, setScore}) {
-      if(score === 9) {
-        return(
-          <>
-            <p>Congrats! You Won!</p>
-          </>
-        )
-      }
+
+      return(
+        (score === 9)
+        ? <StyledScore>🏆 Congrats! You smashed it! Your score was {score} 🥇</StyledScore>
+        : <StyledScore>Your score is: {score}</StyledScore>
+      )
     }
 
     return(
       <div>
-        <StyledScore>Your score is: {score}</StyledScore>
-        <StyledScore>
         {
          endGame({ score, setScore})
         }
-        </StyledScore>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(6, 200px)',
         gridTemplateRows: 'repeat(6, 200px)',
         justifyContent: 'center',
-        margin: '2%'
       }}>
         {cards.map(({backImg, frontImg, flipped, type}, index) =>
             <ReactCardFlip isFlipped={flipped} flipDirection="vertical">

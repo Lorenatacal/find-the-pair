@@ -22,20 +22,19 @@ function App() {
 
   
   return (
-  <>
     <StyledDiv>
-      <StyledTitle>Match the Pair</StyledTitle>
-      <UserName name={name} setName={setName}/>
-    </StyledDiv>
-
-    <div>
     {
       (name !== '')
-      ? <Board />
-      : null
+      ? <>
+          <StyledTitle>Let's do this {name} !</StyledTitle>
+          <Board />
+        </>
+      : <div>
+          <StyledTitle>Match the Pair</StyledTitle>
+          <UserName name={name} setName={setName}/>
+        </div>
     }
-    </div>
-  </>
+    </StyledDiv>
   );
 }
 
