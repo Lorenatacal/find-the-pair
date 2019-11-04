@@ -44,7 +44,7 @@ const Cards = () => {
         const createCard = () => ({
           id: id++,
           type: key,
-          backImg: "red",
+          backImg: "",
           frontImg: images[key],
           flipped: false
         })
@@ -67,6 +67,7 @@ const Cards = () => {
       const copyOfCards = [...cards]
       copyOfCards[index].flipped = true
       setCards(copyOfCards)
+      
       if(cardHistory.length < 2) {
         const cardIndex = copyOfCards[index]
         setCardHistory([...cardHistory, cardIndex])
@@ -90,7 +91,6 @@ const Cards = () => {
           </>
         )
       }
-
     }
 
     return(
