@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactCardFlip from 'react-card-flip';
-import styled from 'styled-components'
-import { NONAME } from 'dns';
+import styled from 'styled-components';
+import Board from './Board';
+import Timer from './Timer'
 
 const StyledButton = styled.button`
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -24,10 +25,6 @@ const Cards = () => {
     const [cards, setCards] = React.useState(shuffle(myCards()))
     const [cardHistory, setCardHistory] = React.useState([])
     const [score, setScore] = React.useState(0)
-    const [hideDiv, setHideDiv] = React.useState(false)
-
-    console.log(cardHistory, 'cardHistory')
-    console.log(score, 'score')
 
     function myCards(){
       let id = 0
@@ -65,23 +62,22 @@ const Cards = () => {
       return a;
   }
 
-    function matchCards({backImg, frontImg, flipped, type}, index) {
+    function matchCards({}, index) {
       const copyOfCards = [...cards]
       copyOfCards[index].flipped = true
       setCards(copyOfCards)
       
-      if(cardHistory.length <= 2 ) {
+      if(cardHistory.length < 2 ) {
         const cardIndex = copyOfCards[index]
         const updatedCardHistory = [...cardHistory, cardIndex]
         setCardHistory(updatedCardHistory)
 
           if(updatedCardHistory.length === 2 && updatedCardHistory[0].type !== updatedCardHistory[1].type) {
-          setCardHistory([])
+            setCardHistory([])
           }
           if(updatedCardHistory.length === 2 && updatedCardHistory[0].type === updatedCardHistory[1].type) {
             setScore(score + 1)
             setCardHistory([])
-            setHideDiv(true)
             document.getElementById(updatedCardHistory[0].id).style.display = "none";
             document.getElementById(updatedCardHistory[1].id).style.display = "none"; 
           }    
@@ -92,7 +88,9 @@ const Cards = () => {
 
       return(
         (score === 9)
-        ? <StyledScore>🏆 Congrats! You smashed it! Your score was {score} 🥇</StyledScore>
+        ? <>
+            <StyledScore>🏆 Congrats! You smashed it! Your score was {score} 🥇</StyledScore>
+          </>
         : <StyledScore>Your score is: {score}</StyledScore>
       )
     }
@@ -102,37 +100,35 @@ const Cards = () => {
         {
          endGame({ score, setScore})
         }
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(6, 200px)',
-        gridTemplateRows: 'repeat(6, 200px)',
-        justifyContent: 'center',
-      }}>
-        {cards.map(({backImg, frontImg, flipped, type, id}, index) =>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(6, 200px)',
+          gridTemplateRows: 'repeat(6, 200px)',
+          justifyContent: 'center',
+        }}>
+          {cards.map(({backImg, frontImg, flipped, type, id}, index) =>
             <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
-                <div key="front">
-                  <StyledButton onClick={() => {
-                        matchCards({backImg, frontImg, flipped, type}, index)
-                  }}
-                  >
-                    <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
-                  </StyledButton>
-                </div>
-                <div key="back" id={id} style={{
-                  display: [type] === true ? 'none' : 'inherit',
-                }}>
-                  <StyledButton onClick={() => {
-                    const copyOfCards = [...cards]
-                    copyOfCards[index].flipped = false
-                    setCards(copyOfCards)
+              <div key="front">
+                <StyledButton onClick={() => {
+                    matchCards({backImg, frontImg, flipped, type}, index)
                 }}
-                  >
-                    <StyledFrontImage src={frontImg}></StyledFrontImage>
-                  </StyledButton>
-                </div>
-              </ReactCardFlip> 
+                >
+                    <StyledImage src="https://loveisinmytummy.com/wp-content/uploads/2017/07/New-Blue-Background-Main-2.jpg"></StyledImage>
+                </StyledButton>
+              </div>
+              <div key="back" id={id}>
+                <StyledButton onClick={() => {
+                  const copyOfCards = [...cards]
+                  copyOfCards[index].flipped = false
+                  setCards(copyOfCards)
+                }}
+                >
+                  <StyledFrontImage src={frontImg}></StyledFrontImage>
+                </StyledButton>
+              </div>
+            </ReactCardFlip> 
           )}
-      </div>
+        </div>
       </div>
     )
   }
