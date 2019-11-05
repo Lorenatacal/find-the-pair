@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Board from './components/Board';
 import UserName from './components/UserName';
-import Timer from './components/Timer';
 
 const StyledDiv = styled.div`
   margin: 2%;
@@ -14,7 +13,7 @@ const StyledDiv = styled.div`
 const StyledTitle = styled.h1`
   margin: 2%;
   text-align: center;
-  font-Family: Cantarell, italic
+  font-family: Georgia, serif, italic;
   font-color: white
 `
 
@@ -27,7 +26,6 @@ function App() {
       (name !== '')
       ? <>
           <StyledTitle>Let's do this {name} !</StyledTitle>
-          <Timer />
           <Board />
         </>
       : <div>
