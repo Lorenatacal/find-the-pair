@@ -6,7 +6,7 @@ const StyledTitle = styled.h1`
   font-Family: Cantarell, italic
 `
 const StyledInput= styled.input`
-    margin-left: 38%;
+    margin-left: 40%;
     margin-bottom: 2%;
     font-size: 1em;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
