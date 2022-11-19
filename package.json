@@ -7,7 +7,7 @@
     "react-card-flip": "^0.8.1",
     "react-dom": "^16.11.0",
     "react-flip-toolkit": "^7.0.6",
-    "react-scripts": "3.2.0",
+    "react-scripts": "5.0.1",
     "react-shuffle": "^2.1.0",
     "styled-components": "^4.4.1"
   },
